@@ -12,6 +12,7 @@ with st.sidebar:
     if df is not None:
         df = pd.read_csv(df)
         st.header('Filtros', divider =  'grey')
+        st.text('Los filtros finales seran en base a la base de datos con los comentarios de la encuesta docente')
 
         filter_container = st.container()
         with filter_container:
@@ -91,7 +92,7 @@ if df is not None:
 Este informe ofrece una visión general de las fortalezas y sugerencias de mejora basadas en las categorías extraídas de los comentarios positivos. La implementación de estas sugerencias puede contribuir a una experiencia educativa más enriquecedora y satisfactoria para los estudiantes."""
             reporte = st.markdown(f"""{reporte_texto}""")
 
-            st.markdown('**Elss reporte debera ser en formato pdf, por ahora solo es un archivo de texto.**')
+            st.markdown('**El reporte debera ser en formato pdf, por ahora solo es un archivo de texto.**')
             st.download_button('Descargar reporte', reporte_texto)
     
     
