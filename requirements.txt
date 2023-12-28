@@ -1,0 +1,6 @@
+streamlit
+pandas
+numpy 
+gensim
+nltk
+pyldavis
