@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import GEMINI
+
 
 
 body = st.container()
@@ -44,56 +46,75 @@ if df is not None:
         st.markdown('*Comentar que las sugerencias de mejora, la idea es que vayan solo para los comentarios negativos*')
         
         generate = st.button('Generar Reporte')
+        #### AÑADIR FILTROS O INPUTS DE LOS USUARIOS PARA LOS 3 DIFERENTES TIPOS DE REPORTE
+        ### CURSO/SECCION - COORDINACION CURSO (TODAS LAS SECCION DE UN CURSO) - DEPARTAMENTAL (EJ: DEPARTAMENTO DE MATEMATICAS.)
 
         if generate:
             st.markdown("**Reporte de comentarios**")
-            reporte_texto = """**Reporte de Evaluación y Sugerencias de Mejora para Categorías de Comentarios Positivos**
+            comentarios = "\n".join(
+               df
+               .comentario
+               .sample(100, random_state=42)
+               .values
+)
+            categoria = "\n".join(
+                df
+                .nombre_curso
+                .sample(100, random_state=42)
+                .values)
+            prompt_parts = [
+  f"Genera un reporte de los siguientes comentarios. El reporte debe ser lo más completo y formal posible. Debe ser en formato informe pensando en que se entregara a quien lo requiera a modo de feedback. Los comentarios son de una encuesta docente. \n Comentarios{comentarios}",
+]
+            st.markdown(f"""{comentarios}""")
+            response = GEMINI.model.generate_content(prompt_parts)
+            reporte = st.markdown(f"""{response.text}""")
+#             #reporte_texto = """**Reporte de Evaluación y Sugerencias de Mejora para Categorías de Comentarios Positivos**
 
----
+# ---
 
-### Categoría 1: Curso y Docente
-**Fortalezas:**
-- Los comentarios destacan la calidad del curso y la labor del docente.
-- La mención de "mejor" y "gracias" sugiere una apreciación general.
+# ### Categoría 1: Curso y Docente
+# **Fortalezas:**
+# - Los comentarios destacan la calidad del curso y la labor del docente.
+# - La mención de "mejor" y "gracias" sugiere una apreciación general.
 
-**Sugerencias de Mejora:**
-- Fomentar la retroalimentación específica sobre aspectos que los estudiantes consideran "mejores" para mantener y fortalecer esos puntos fuertes.
-- Explorar oportunidades para destacar aún más la labor del equipo docente para crear un ambiente de aprendizaje positivo.
+# **Sugerencias de Mejora:**
+# - Fomentar la retroalimentación específica sobre aspectos que los estudiantes consideran "mejores" para mantener y fortalecer esos puntos fuertes.
+# - Explorar oportunidades para destacar aún más la labor del equipo docente para crear un ambiente de aprendizaje positivo.
 
----
+# ---
 
-### Categoría 2: Actitud del Profesor y Disposición
-**Fortalezas:**
-- Se destaca la actitud positiva del profesor y su disposición para abordar dudas.
-- Menciones positivas sobre la relación con los estudiantes.
+# ### Categoría 2: Actitud del Profesor y Disposición
+# **Fortalezas:**
+# - Se destaca la actitud positiva del profesor y su disposición para abordar dudas.
+# - Menciones positivas sobre la relación con los estudiantes.
 
-**Sugerencias de Mejora:**
-- Fomentar una comunicación abierta para conocer más detalles sobre la disposición del profesor y cómo puede ser mejorada.
-- Implementar actividades que promuevan una interacción más estrecha entre el profesor y los estudiantes para fortalecer la conexión positiva.
+# **Sugerencias de Mejora:**
+# - Fomentar una comunicación abierta para conocer más detalles sobre la disposición del profesor y cómo puede ser mejorada.
+# - Implementar actividades que promuevan una interacción más estrecha entre el profesor y los estudiantes para fortalecer la conexión positiva.
 
----
+# ---
 
-### Categoría 3: Contenido de las Clases y Comprensión
-**Fortalezas:**
-- Se menciona la calidad de las clases, la materia y la comprensión de los contenidos.
-- Los términos "bien" y "entender" indican una experiencia positiva de aprendizaje.
+# ### Categoría 3: Contenido de las Clases y Comprensión
+# **Fortalezas:**
+# - Se menciona la calidad de las clases, la materia y la comprensión de los contenidos.
+# - Los términos "bien" y "entender" indican una experiencia positiva de aprendizaje.
 
-**Sugerencias de Mejora:**
-- Realizar encuestas específicas sobre los métodos de enseñanza y la comprensión de los contenidos para obtener más detalles sobre lo que los estudiantes encuentran efectivo.
-- Explorar posibles ajustes en la presentación de los ejercicios para mejorar aún más la comprensión y aplicabilidad de la materia.
+# **Sugerencias de Mejora:**
+# - Realizar encuestas específicas sobre los métodos de enseñanza y la comprensión de los contenidos para obtener más detalles sobre lo que los estudiantes encuentran efectivo.
+# - Explorar posibles ajustes en la presentación de los ejercicios para mejorar aún más la comprensión y aplicabilidad de la materia.
 
----
+# ---
 
-### Observaciones Generales:
-- Las categorías de comentarios positivos reflejan una experiencia generalmente favorable.
-- La incorporación de actividades interactivas o dinámicas en las clases podría fortalecer aún más la participación y el interés de los estudiantes.
-- Se recomienda establecer canales de retroalimentación abiertos para que los estudiantes expresen sus ideas de manera más detallada.
+# ### Observaciones Generales:
+# - Las categorías de comentarios positivos reflejan una experiencia generalmente favorable.
+# - La incorporación de actividades interactivas o dinámicas en las clases podría fortalecer aún más la participación y el interés de los estudiantes.
+# - Se recomienda establecer canales de retroalimentación abiertos para que los estudiantes expresen sus ideas de manera más detallada.
 
-Este informe ofrece una visión general de las fortalezas y sugerencias de mejora basadas en las categorías extraídas de los comentarios positivos. La implementación de estas sugerencias puede contribuir a una experiencia educativa más enriquecedora y satisfactoria para los estudiantes."""
-            reporte = st.markdown(f"""{reporte_texto}""")
+# Este informe ofrece una visión general de las fortalezas y sugerencias de mejora basadas en las categorías extraídas de los comentarios positivos. La implementación de estas sugerencias puede contribuir a una experiencia educativa más enriquecedora y satisfactoria para los estudiantes."""
+#             #reporte = st.markdown(f"""{reporte_texto}""")
 
             st.markdown('**El reporte debera ser en formato pdf, por ahora solo es un archivo de texto.**')
-            st.download_button('Descargar reporte', reporte_texto)
+            st.download_button('Descargar reporte', response.text, file_name='reporte.txt')
     
     
 
