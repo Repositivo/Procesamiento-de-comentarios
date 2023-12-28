@@ -98,7 +98,7 @@ if df is not None:
   f"Genera un reporte de los siguientes comentarios. El reporte debe ser lo más completo y formal posible. Debe ser en formato informe pensando en que se entregara a quien lo requiera a modo de feedback. Los comentarios son de una encuesta docente. \n Comentarios{comentarios}",
 ]
             st.markdown(f"""{comentarios}""")
-            response = GEMINI.model.generate_content(prompt_parts)
+            response = model.generate_content(prompt_parts)
             reporte = st.markdown(f"""{response.text}""")
 #             #reporte_texto = """**Reporte de Evaluación y Sugerencias de Mejora para Categorías de Comentarios Positivos**
 
