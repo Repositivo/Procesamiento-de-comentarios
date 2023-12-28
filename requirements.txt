@@ -4,3 +4,4 @@ numpy
 gensim
 nltk
 pyldavis
+google.generativeai
