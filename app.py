@@ -11,7 +11,7 @@ import os
 
 # clf_p = pipeline("text-classification",model="crisU8/negative_model", from_tf=True)s
 
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=st.secrets["API_KEY"])
 
 # Set up the model
 generation_config = {
