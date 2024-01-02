@@ -1,9 +1,16 @@
 import streamlit as st
 import pandas as pd
 import google.generativeai as genai
+from dotenv import load_dotenv
+import os
+# from transformers import pipeline
 
+# clf_p = pipeline("text-classification",model="crisU8/positivo_model", from_tf=True)
 
-genai.configure(api_key="AIzaSyA3mKYlIjCgAneZlssue9jS_nU1PdM0vPM")
+# clf_p = pipeline("text-classification",model="crisU8/negative_model", from_tf=True)
+# load_dotenv()
+
+genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # Set up the model
 generation_config = {
@@ -63,13 +70,24 @@ if df is not None:
     
     tab1, tab2 = st.tabs(['Estadisticas', 'Reporte'])
     with tab1:
-        st.markdown('**Estadisticas de ejemplo**')
-        st.markdown('Aqui se deberia ver un grafico similar que cuente, por ejemplo, que categoria es más comun en un cierto FILTRO')
-        st.markdown('** <--- Se actuliza en tiempo real segun el filtro**')
-        st.markdown('**Cantidad de comentarios asignados a cada categoria(El grafico de abajo es solo un ejemplo, ya que muestra la cantidad de comentarios positivos y negativos por el filtro aplicado)**')
+        # df_p = df[df['tipo'] == 1]
+        # df_n = df[df['tipo'] == 0]
+        # comments_p = df_p['comentario'].sample(100).tolist()
+        # comments_n = df_n['comentario'].sample(100).tolist()
+        # clasificacion_p = clf_p(comments_p)
+        # clasificacion_n = clf_p(comments_n)
+        # list_cat_p = [clasificacion_p[i]['label'] for i in range(len(comments_p))]
+        # list_cat_n = [clasificacion_n[i]['label'] for i in range(len(comments_n))]
+        # df_prueba_p = pd.DataFrame({
+        #     'comentario': comments_p,
+        #     'clasificacion': list_cat_p
+        # })
+        # df_prueba_n = pd.DataFrame({
+        #     'comentario': comments_n,
+        #     'clasificacion': list_cat_n
+        # })
+        # st.bar_chart(df_prueba_p['clasificacion'].value_counts())
         st.bar_chart(df['tipo'].value_counts())
-        st.markdown('**Otro tipo de información. Quizas añadir la precision con la que fueron clasificados los comentarios en su respectiva categoria, ya que un modelo no será nunca totalmente preciso**')
-        st.markdown('*[Inserte mas informacion util para visualizar por filtro]*')
 
 
     with tab2:
