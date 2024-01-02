@@ -1,16 +1,17 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import streamlit as st
 import pandas as pd
 import google.generativeai as genai
-from dotenv import load_dotenv
 import os
 # from transformers import pipeline
 
 # clf_p = pipeline("text-classification",model="crisU8/positivo_model", from_tf=True)
 
-# clf_p = pipeline("text-classification",model="crisU8/negative_model", from_tf=True)
-# load_dotenv()
+# clf_p = pipeline("text-classification",model="crisU8/negative_model", from_tf=True)s
 
-genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Set up the model
 generation_config = {
@@ -100,6 +101,7 @@ if df is not None:
         ### CURSO/SECCION - COORDINACION CURSO (TODAS LAS SECCION DE UN CURSO) - DEPARTAMENTAL (EJ: DEPARTAMENTO DE MATEMATICAS.)
 
         if generate:
+            st.markdown("**Reporte a nivel de maqueta solamente. Para hacerse una idea**")
             st.markdown("**Reporte de comentarios**")
             comentarios = "\n".join(
                df
@@ -115,7 +117,7 @@ if df is not None:
             prompt_parts = [
   f"Genera un reporte de los siguientes comentarios. El reporte debe ser lo más completo y formal posible. Debe ser en formato informe pensando en que se entregara a quien lo requiera a modo de feedback. Los comentarios son de una encuesta docente. \n Comentarios{comentarios}",
 ]
-            st.markdown(f"""{comentarios}""")
+            #st.markdown(f"""{comentarios}""")
             response = model.generate_content(prompt_parts)
             reporte = st.markdown(f"""{response.text}""")
 #             #reporte_texto = """**Reporte de Evaluación y Sugerencias de Mejora para Categorías de Comentarios Positivos**
