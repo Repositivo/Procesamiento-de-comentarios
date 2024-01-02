@@ -5,3 +5,4 @@ gensim
 nltk
 pyldavis
 google.generativeai
+transformers
