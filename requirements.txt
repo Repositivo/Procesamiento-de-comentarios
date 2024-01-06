@@ -1,3 +1,5 @@
+transformers
+tensorflow
 streamlit
 pandas
 numpy 
