@@ -9,3 +9,4 @@ pyldavis
 google.generativeai
 python-dotenv
 matplotlib
+seaborn
