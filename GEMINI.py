@@ -4,11 +4,11 @@ import streamlit as st
 from dotenv import load_dotenv
 load_dotenv()
 
-#genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-genai.configure(api_key=st.secrets["API_KEY"])
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+#genai.configure(api_key=st.secrets["API_KEY"])
 
 generation_config = {
-  "temperature": 0.5,
+  "temperature": 0.0,
   "top_p": 1,
   "top_k": 1,
   "max_output_tokens": 4096,
