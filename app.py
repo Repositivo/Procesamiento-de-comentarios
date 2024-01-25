@@ -5,7 +5,6 @@ import utils
 from Modelos_clf import Clasificador, model_neg, tokenizer_neg, model_pos, tokenizer_pos
 from GEMINI import gemini
 from streamlit_pills import pills
-import clipboard
 
 
 
