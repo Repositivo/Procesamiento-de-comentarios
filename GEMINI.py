@@ -1,11 +1,12 @@
 import google.generativeai as genai
 import os
 import streamlit as st
+os.environ["GOOGLE_API_KEY"] =  "AIzaSyBMSUd904W0MVcljzoZ-lenxOisQx7lfuQ"
 from dotenv import load_dotenv
 load_dotenv()
 
-#genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-genai.configure(api_key=st.secrets["API_KEY"])
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+#genai.configure(api_key=st.secrets["API_KEY"])
 
 generation_config = {
   "temperature": 0.0,
